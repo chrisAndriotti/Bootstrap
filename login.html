@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+  <head>
+	<title>Login</title>
+    <meta charset="utf-8">
+	
+	<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+	<script>
+		let usuarios = []
+		function autenticar(){
+			//Dados digitados pelo usuários
+			let login = document.getElementById('idUsuario').value
+			let senha = document.getElementById('idSenha').value
+			
+			//buscar todos os dados no localStorage
+			usuarios = JSON.parse(localStorage.getItem('Usuarios'))
+			if(usuarios != null){
+				//diferente de null, existem usuários para verificar
+				//verificar um por um dos usuários, para confirmar se o login e a senha existem
+				let encontrado = false
+				for(let i=0; i<usuarios.length; i++){
+					if(login == usuarios[i].login 
+					&& senha == usuarios[i].senha){
+						encontrado = true
+						i = usuarios.length
+						//break;
+					}
+				}
+				//encontrado == true
+				if(encontrado){
+					alert('Usuário encontrado!')
+					window.location.href = "home.html"
+				}else
+					alert('Usuário e Senha não conferem!')				
+				
+			}else{//igual a null, ou seja, não existem usuários cadastrados
+				alert('Não existem usuários cadastrados!\nCadastre seu usuário!')
+			}
+			
+			
+		}
+	</script>
+    <title></title>
+  </head>
+  <body style="background:  rgba(0, 0, 0, 0.925) 50%">
+	<div class="container">
+		<nav class="navbar navbar-expand border-bottom border-dark mb-5 d-flex justify-content-center" >
+			<a class="navbar-brand"><h3 style="color: rgba(144, 255, 140, 0.986);">Login</h3></a>
+		</nav>
+		<div class="row">
+			<div class="col-4"></div>
+			<form class="form-group col-lg-4 border border-dark p-5 rounded mb-5" onsubmit="return false" style="background-color:rgba(6, 143, 255, 0)">
+				<div class="form-group"> 
+					<label for="idUsuario" class="text-light">Usuário</label>
+					<input type="text" class="form-control bg-dark text-white" id="idUsuario" placeholder="Usuario">
+				</div>
+				<div class="form-group mb-5">
+					<label for="idSenha" class="text-light">Senha</label>
+					<input type="password" class="form-control bg-dark text-white"  id="idSenha" placeholder="Senha">
+				</div>
+				<div>
+					<button class="btn btn-success btn-lg btn-block" onclick="autenticar()">Logar</button>
+				</div>
+				<div class="p-2">
+					<label class="text-light">Não possui cadastrado? <a class="text-success" href="cadastro.html"> Clique aqui</a></label>
+				</div>
+			</form>
+			<div class="col-4"></div>
+			
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col d-flex justify-content-center">
+				<h6 class="text-light">Empresa™ </h6>
+			</div>
+			
+		</div>
+	</div>
+	
+  </body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+  <head>
+	<title>Home</title>
+    <meta charset="utf-8">
+	
+	<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+	<script>	
+		let produtos = []
+		
+		function cadastrarProduto(){
+			//pegar as informações digitadas dos usuários pelo id
+			//criar o objeto para ser cadastrado
+			let produto = {
+				nome: document.getElementById('idProduto').value,
+				preco: document.getElementById('idPreco').value,
+				quantidade: document.getElementById('idQtd').value
+			}
+			
+			//1ª buscar os valores no localStorage e preencher o array
+			produtos = JSON.parse(localStorage.getItem('Produtos'))
+			if(produtos == null)
+				produtos = []
+			
+			//inserir o objeto no array
+			produtos.push(produto)
+			
+			//armazenar no localStorage convertendo para JSON
+			localStorage.setItem('Produtos', JSON.stringify(produtos))
+			
+			//inserindo os valores cadastrados na tabela dinamicamente
+			let corpoTabela = document.getElementById('idCorpoTabela')
+			let tr = document.createElement('tr')
+			let td1 = document.createElement('td')
+			td1.innerHTML = produto.nome
+			tr.appendChild(td1)
+			let td2 = document.createElement('td')
+			td2.innerHTML = produto.preco
+			tr.appendChild(td2)
+			let td3 = document.createElement('td')
+			td3.innerHTML = produto.quantidade
+			tr.appendChild(td3)			
+			corpoTabela.appendChild(tr)
+			
+			alert('Produto cadastrado com sucesso!')			
+		}
+		
+		function carregarTabela(){
+			//Buscar os valores no localStorage e preencher o array
+			produtos = JSON.parse(localStorage.getItem('Produtos'))
+			//Diferene de null é porque existem valores a serem carregados
+			if(produtos != null){
+				let corpoTabela = document.getElementById('idCorpoTabela')
+				
+				
+				for(let i=0;  i<produtos.length; i++){
+					let tr = document.createElement('tr')
+					let td1 = document.createElement('td')
+					td1.innerHTML = produtos[i].nome
+					tr.appendChild(td1)
+					let td2 = document.createElement('td')
+					td2.innerHTML = produtos[i].preco
+					tr.appendChild(td2)
+					let td3 = document.createElement('td')
+					td3.innerHTML = produtos[i].quantidade
+					tr.appendChild(td3)
+					
+					corpoTabela.appendChild(tr)
+					/*console.log('Produto: '+ produtos[i].nome 
+					+'\nPreço: '+ produtos[i].preco
+					+'\nQtd: ' + produtos[i].quantidade)*/
+				}
+			}			
+		}
+	</script>
+    <title></title>
+  </head>
+	<!--Todas as vezes em que a página é carregada, a função é chamada-->
+  <body onload="carregarTabela()"style="background:  rgba(0, 0, 0, 0.925) 50%">
+	<div class="container">
+		<nav class="navbar navbar-expand border-bottom border-dark p-1 mb-3" >
+			<a class="navbar-brand col-11  d-flex justify-content-center"><h4 style="color: rgba(144, 255, 140, 0.986);">Cadastrar Produto</h4></a>
+			<a class="btn btn-dark col-1 btn-sm active float-left" href="login.html">sair</a>
+		</nav>
+		<div class="row">
+			<!--<form class="form-group col-lg-4 border border-dark p-5 rounded mb-5" style="background-color:rgba(6, 143, 255, 0)"> -->
+			<div class="col-4"></div>
+			<div class="col-lg-4 border border-dark rounded mb-3">
+				<div class="input-group col p-2">
+					<div class="input-group-prepend">
+						<span class="input-group-text border-dark bg-dark text-light">Produto</span>
+					</div>
+					<input type="text" class="form-control border-dark bg-dark text-light" id="idProduto" aria-label="Quantia">
+					
+				</div>
+				<div class="input-group col p-2">
+					<div class="input-group-prepend">
+						<span class="input-group-text border-dark bg-dark text-light">R$</span>
+					</div>
+					<input type="text" class="form-control border-dark bg-dark text-light" id="idPreco" aria-label="Quantia" placeholder="valor">
+				</div>
+				<div class="input-group col p-2">
+					<div class="input-group-prepend">
+						<span class="input-group-text border-dark bg-dark text-light">Quantidade</span>
+					</div>
+					<input type="text" class="form-control border-dark bg-dark text-light" id="idQtd" aria-label="Quantia">
+					
+				</div>
+				
+				<div class="col form-group p-2 ">
+					<button class="btn btn-success btn-md btn-block " onclick="cadastrarProduto()">Cadastrar</button>
+				</div>
+			</div>
+			<div class="col-4"></div>
+		</div>
+		<div class="row">
+			<div class="col-3"></div>
+			<table class="col-lg-6 bg-dark">
+				<thead>
+					<tr class="border" style="color: rgba(144, 255, 140, 0.986);">
+						<td class="col">Produto</td>
+						<td class="col">Preço</td>
+						<td class="col">Quantidade</td>
+					</tr>
+				</thead>
+				<tbody class="bg-light" id="idCorpoTabela">
+				</tbody>
+			</table>
+			<div class="col-3"></div>
+		</div>
+		
+	</div>
+  </body>
+</html>

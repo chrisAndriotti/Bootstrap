@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt_BR">
+  <head>
+	<title>Cadastro de Usuário</title>
+    <meta charset="utf-8">
+	
+	<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+	<script>	
+		//criar o array de usuários
+		let usuarios = []
+		
+		function cadastrarUsuario(){
+			//pegar as informações digitadas dos usuários
+			let l = document.getElementById('idUsuario').value
+			let s = document.getElementById('idSenha').value
+			let cs = document.getElementById('idSenhaConfirmar').value
+			
+			if(s == cs){
+				//criando o objeto para ser cadastrado
+				let user = {
+					login: l,
+					senha: s
+				}				
+				
+				//1ª buscar os valores no localStorage e preencher o array
+				usuarios = JSON.parse(localStorage.getItem('Usuarios'))
+				//se não existir 'Usuarios' no localStorage, retorna null
+				//Preciso reconstruir o array
+				if(usuarios == null)
+					usuarios = []
+							
+				//inserir o objeto no array
+				usuarios.push(user)			
+				
+				//armazenar no localStorage convertendo para JSON
+				localStorage.setItem('Usuarios', JSON.stringify(usuarios))
+				
+				alert('Usuário cadastrado com sucesso!')
+				window.location.href = "login.html"
+				
+			}else{
+				alert('Senhas cadastradas não conferem!')
+			}
+		}
+	</script>
+    <title></title>
+  </head>
+  <body style="background:  rgba(0, 0, 0, 0.925) 50%">
+	<div class="container">
+		<nav class="navbar navbar-expand border-bottom border-dark mb-5 d-flex justify-content-center" >
+			<a class="navbar-brand"><h3 style="color: rgba(144, 255, 140, 0.986);">Cadastro de Usuário</h3></a>
+		</nav>
+		<div class="row">
+			<div class="col-4"></div>
+			<form class="form-group col-lg-4 border border-dark p-5 rounded mb-5" style="background-color:rgba(6, 143, 255, 0)">
+				
+				<div class="form-group">
+					<label for="idUsuario" class="text-light">Crie um usuário</label>
+					<input type="text" class="form-control bg-dark text-white" id="idUsuario" placeholder="Usuario">
+				</div>
+				<div class="form-group">
+					<label for="idSenha" class="text-light">Crie uma senha</label>
+					<input type="password" class="form-control bg-dark text-white"  id="idSenha" placeholder="Senha">
+				</div>
+				<div class="form-group">
+					<label for="idSenhaConfirmar" class="text-light">Confirme a senha</label>
+					<input type="password" class="form-control bg-dark text-white"  id="idSenhaConfirmar" placeholder="Confirmar Senha">
+				</div>
+				<div class="form-group form-check">	
+					<input type="checkbox" class="form-check-input bg-white" id="confirma">
+					<label class="form-check-label text-light" for="confirma">Confirmar criação do usuário</label>
+				</div>
+				<div class="p-2">
+					<a class="btn btn-outline-warning btn-lg active" href="login.html">voltar</a>
+					<button class="btn btn-success btn-lg float-right" onclick="cadastrarUsuario()">Cadastrar</button>
+				</div>
+				
+			</form>
+			<div class="col-4"></div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col d-flex justify-content-center">
+				<h6 class="text-light">Empresa™ </h6>
+			</div>
+			
+		</div>
+	</div>
+	
+  </body>
+</html>
